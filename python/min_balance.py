@@ -38,6 +38,7 @@ def main():
     plt.title('Minimum balance')
     plt.xlabel('x')
     plt.ylabel('y')
+    plt.yticks(np.arange(-1, 1, 2.0))
     plt.show()
 
 
