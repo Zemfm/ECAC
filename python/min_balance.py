@@ -13,13 +13,11 @@ import timeit
 def main():
 
 
-
+    #versao diferente do csv, sem aspas no nome das colunas
     trans = pd.read_csv("files/trans_train_py.csv", sep=';', usecols = ['account_id', 'balance'])
 
     loans = pd.read_csv("files/loan_train.csv", sep=';', usecols = ['account_id', 'status'])
 
-
-    min_bal = pd.read_csv("min_balance.csv", sep=',')
 
     trans = trans.sort_values('balance')
 
