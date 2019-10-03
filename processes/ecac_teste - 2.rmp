@@ -143,6 +143,9 @@
         <parameter key="normalize_weights" value="true"/>
         <parameter key="squared_correlation" value="false"/>
       </operator>
+      <operator activated="true" class="store" compatibility="9.3.001" expanded="true" height="68" name="Store" width="90" x="1318" y="136">
+        <parameter key="repository_entry" value="../data/processed/data new attributes/loans_crimes"/>
+      </operator>
       <connect from_op="Retrieve loan_train" from_port="output" to_op="Rename" to_port="example set input"/>
       <connect from_op="Rename" from_port="example set output" to_op="Join" to_port="left"/>
       <connect from_op="Retrieve account" from_port="output" to_op="Rename (2)" to_port="example set input"/>
@@ -156,9 +159,10 @@
       <connect from_op="Aggregate" from_port="example set output" to_op="Generate Attributes (2)" to_port="example set input"/>
       <connect from_op="Generate Attributes (2)" from_port="example set output" to_op="Rename (3)" to_port="example set input"/>
       <connect from_op="Rename (3)" from_port="example set output" to_op="Correlation Matrix" to_port="example set"/>
-      <connect from_op="Correlation Matrix" from_port="example set" to_port="result 1"/>
+      <connect from_op="Correlation Matrix" from_port="example set" to_op="Store" to_port="input"/>
       <connect from_op="Correlation Matrix" from_port="matrix" to_port="result 2"/>
       <connect from_op="Correlation Matrix" from_port="weights" to_port="result 3"/>
+      <connect from_op="Store" from_port="through" to_port="result 1"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>
