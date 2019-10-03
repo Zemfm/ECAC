@@ -13,7 +13,7 @@
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
       <operator activated="true" class="productivity:execute_process" compatibility="9.3.001" expanded="true" height="68" name="Execute clean_client" width="90" x="112" y="34">
-        <parameter key="process_location" value="//Local Repository/processes/project/client_clean"/>
+        <parameter key="process_location" value="client_clean"/>
         <parameter key="use_input" value="true"/>
         <parameter key="store_output" value="false"/>
         <parameter key="propagate_metadata_recursively" value="true"/>
@@ -22,7 +22,7 @@
         <parameter key="fail_for_unknown_macros" value="true"/>
       </operator>
       <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve account" width="90" x="179" y="187">
-        <parameter key="repository_entry" value="//Local Repository/data/account"/>
+        <parameter key="repository_entry" value="../../data/account"/>
       </operator>
       <operator activated="true" class="generate_attributes" compatibility="9.3.001" expanded="true" height="82" name="Generate Attributes" width="90" x="313" y="187">
         <list key="function_descriptions">

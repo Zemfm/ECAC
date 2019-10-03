@@ -13,10 +13,10 @@
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
       <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve client (2)" width="90" x="45" y="85">
-        <parameter key="repository_entry" value="../data/processed/client"/>
+        <parameter key="repository_entry" value="../data/client"/>
       </operator>
       <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve disp (2)" width="90" x="45" y="187">
-        <parameter key="repository_entry" value="../data/processed/disp"/>
+        <parameter key="repository_entry" value="../data/disp"/>
       </operator>
       <operator activated="true" class="concurrency:join" compatibility="9.3.001" expanded="true" height="82" name="Join (3)" width="90" x="179" y="85">
         <parameter key="remove_double_attributes" value="true"/>
@@ -28,7 +28,7 @@
         <parameter key="keep_both_join_attributes" value="false"/>
       </operator>
       <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve account" width="90" x="179" y="238">
-        <parameter key="repository_entry" value="../data/processed/account"/>
+        <parameter key="repository_entry" value="../data/account"/>
       </operator>
       <operator activated="true" class="concurrency:join" compatibility="9.3.001" expanded="true" height="82" name="Join" width="90" x="313" y="187">
         <parameter key="remove_double_attributes" value="true"/>

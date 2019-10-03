@@ -12,13 +12,18 @@
     <parameter key="process_duration_for_mail" value="30"/>
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
-      <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve client" width="90" x="45" y="289">
-        <parameter key="repository_entry" value="../data/processed/client"/>
+      <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve client" width="90" x="45" y="238">
+        <parameter key="repository_entry" value="../data/client"/>
       </operator>
-      <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve disp" width="90" x="45" y="391">
+      <operator activated="true" class="rename" compatibility="9.3.001" expanded="true" height="82" name="Rename" width="90" x="179" y="238">
+        <parameter key="old_name" value="district_id"/>
+        <parameter key="new_name" value="district_id_client"/>
+        <list key="rename_additional_attributes"/>
+      </operator>
+      <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve disp" width="90" x="45" y="340">
         <parameter key="repository_entry" value="../data/disp"/>
       </operator>
-      <operator activated="true" class="concurrency:join" compatibility="9.3.001" expanded="true" height="82" name="Join" width="90" x="179" y="289">
+      <operator activated="true" class="concurrency:join" compatibility="9.3.001" expanded="true" height="82" name="Join" width="90" x="313" y="289">
         <parameter key="remove_double_attributes" value="true"/>
         <parameter key="join_type" value="inner"/>
         <parameter key="use_id_attribute_as_key" value="false"/>
@@ -27,35 +32,31 @@
         </list>
         <parameter key="keep_both_join_attributes" value="false"/>
       </operator>
-      <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve card_train" width="90" x="179" y="442">
-        <parameter key="repository_entry" value="../data/card_train"/>
+      <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve account" width="90" x="112" y="136">
+        <parameter key="repository_entry" value="../data/account"/>
       </operator>
-      <operator activated="true" class="rename" compatibility="9.3.001" expanded="true" height="82" name="Rename" width="90" x="313" y="289">
-        <parameter key="old_name" value="type"/>
-        <parameter key="new_name" value="dispos_type"/>
+      <operator activated="true" class="rename" compatibility="9.3.001" expanded="true" height="82" name="Rename (2)" width="90" x="246" y="136">
+        <parameter key="old_name" value="district_id"/>
+        <parameter key="new_name" value="district_id_account"/>
         <list key="rename_additional_attributes"/>
       </operator>
-      <operator activated="true" class="rename" compatibility="9.3.001" expanded="true" height="82" name="Rename (2)" width="90" x="313" y="442">
-        <parameter key="old_name" value="type"/>
-        <parameter key="new_name" value="card_type"/>
-        <list key="rename_additional_attributes"/>
-      </operator>
-      <operator activated="true" class="concurrency:join" compatibility="9.3.001" expanded="true" height="82" name="Join (2)" width="90" x="447" y="289">
+      <operator activated="true" class="concurrency:join" compatibility="9.3.001" expanded="true" height="82" name="Join (2)" width="90" x="380" y="187">
         <parameter key="remove_double_attributes" value="true"/>
-        <parameter key="join_type" value="outer"/>
+        <parameter key="join_type" value="inner"/>
         <parameter key="use_id_attribute_as_key" value="false"/>
         <list key="key_attributes">
-          <parameter key="disp_id" value="disp_id"/>
+          <parameter key="account_id" value="account_id"/>
         </list>
         <parameter key="keep_both_join_attributes" value="false"/>
       </operator>
-      <operator activated="true" class="generate_attributes" compatibility="9.3.001" expanded="true" height="82" name="Generate Attributes" width="90" x="581" y="289">
+      <operator activated="true" class="generate_attributes" compatibility="9.3.001" expanded="true" height="82" name="Generate Attributes" width="90" x="514" y="289">
         <list key="function_descriptions">
-          <parameter key="has_card" value="if(missing(card_type), &quot;NO&quot;, &quot;YES&quot;)"/>
+          <parameter key="different_district" value="if(district_id_account!=district_id_client , &quot;YES&quot;,&quot;NO&quot;)"/>
+          <parameter key="district" value="str(district_id_client)"/>
         </list>
         <parameter key="keep_all" value="true"/>
       </operator>
-      <operator activated="true" class="aggregate" compatibility="9.3.001" expanded="true" height="82" name="Aggregate" width="90" x="179" y="136">
+      <operator activated="true" class="aggregate" compatibility="9.3.001" expanded="true" height="82" name="Aggregate" width="90" x="581" y="136">
         <parameter key="use_default_aggregation" value="false"/>
         <parameter key="attribute_filter_type" value="all"/>
         <parameter key="attribute" value=""/>
@@ -72,26 +73,29 @@
         <parameter key="default_aggregation_function" value="average"/>
         <list key="aggregation_attributes">
           <parameter key="disp_id" value="count"/>
-          <parameter key="dispos_type" value="concatenation"/>
-          <parameter key="has_card" value="concatenation"/>
+          <parameter key="type" value="concatenation"/>
+          <parameter key="different_district" value="concatenation"/>
+          <parameter key="district" value="concatenation"/>
         </list>
         <parameter key="group_by_attributes" value="account_id"/>
         <parameter key="count_all_combinations" value="false"/>
         <parameter key="only_distinct" value="false"/>
         <parameter key="ignore_missings" value="true"/>
       </operator>
-      <connect from_op="Retrieve client" from_port="output" to_op="Join" to_port="left"/>
+      <connect from_op="Retrieve client" from_port="output" to_op="Rename" to_port="example set input"/>
+      <connect from_op="Rename" from_port="example set output" to_op="Join" to_port="left"/>
       <connect from_op="Retrieve disp" from_port="output" to_op="Join" to_port="right"/>
-      <connect from_op="Join" from_port="join" to_op="Rename" to_port="example set input"/>
-      <connect from_op="Retrieve card_train" from_port="output" to_op="Rename (2)" to_port="example set input"/>
-      <connect from_op="Rename" from_port="example set output" to_op="Join (2)" to_port="left"/>
-      <connect from_op="Rename (2)" from_port="example set output" to_op="Join (2)" to_port="right"/>
+      <connect from_op="Join" from_port="join" to_op="Join (2)" to_port="right"/>
+      <connect from_op="Retrieve account" from_port="output" to_op="Rename (2)" to_port="example set input"/>
+      <connect from_op="Rename (2)" from_port="example set output" to_op="Join (2)" to_port="left"/>
       <connect from_op="Join (2)" from_port="join" to_op="Generate Attributes" to_port="example set input"/>
       <connect from_op="Generate Attributes" from_port="example set output" to_op="Aggregate" to_port="example set input"/>
+      <connect from_op="Generate Attributes" from_port="original" to_port="result 2"/>
       <connect from_op="Aggregate" from_port="example set output" to_port="result 1"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
     </process>
   </operator>
 </process>

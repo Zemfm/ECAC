@@ -13,7 +13,7 @@
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
       <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve loan_train" width="90" x="313" y="289">
-        <parameter key="repository_entry" value="//Local Repository/data/loan_train"/>
+        <parameter key="repository_entry" value="../data/loan_train"/>
       </operator>
       <operator activated="true" class="rename" compatibility="9.3.001" expanded="true" height="82" name="Rename" width="90" x="447" y="289">
         <parameter key="old_name" value="date"/>
@@ -21,7 +21,7 @@
         <list key="rename_additional_attributes"/>
       </operator>
       <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve account" width="90" x="313" y="391">
-        <parameter key="repository_entry" value="//Local Repository/data/account"/>
+        <parameter key="repository_entry" value="../data/account"/>
       </operator>
       <operator activated="true" class="rename" compatibility="9.3.001" expanded="true" height="82" name="Rename (2)" width="90" x="447" y="391">
         <parameter key="old_name" value="date"/>
@@ -38,7 +38,7 @@
         <parameter key="keep_both_join_attributes" value="false"/>
       </operator>
       <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve district" width="90" x="581" y="442">
-        <parameter key="repository_entry" value="//Local Repository/data/district"/>
+        <parameter key="repository_entry" value="../data/district"/>
       </operator>
       <operator activated="true" class="concurrency:join" compatibility="9.3.001" expanded="true" height="82" name="Join (2)" width="90" x="715" y="391">
         <parameter key="remove_double_attributes" value="true"/>

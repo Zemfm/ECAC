@@ -13,16 +13,16 @@
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
       <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve client" width="90" x="179" y="85">
-        <parameter key="repository_entry" value="../data/processed/client"/>
+        <parameter key="repository_entry" value="../data/client"/>
       </operator>
       <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve account" width="90" x="313" y="187">
-        <parameter key="repository_entry" value="../data/processed/account"/>
+        <parameter key="repository_entry" value="../data/account"/>
       </operator>
       <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve loan_train" width="90" x="849" y="187">
-        <parameter key="repository_entry" value="../data/processed/loan_train"/>
+        <parameter key="repository_entry" value="../data/loan_train"/>
       </operator>
       <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve disp (3)" width="90" x="45" y="289">
-        <parameter key="repository_entry" value="../data/processed/disp"/>
+        <parameter key="repository_entry" value="../data/disp"/>
       </operator>
       <operator activated="true" class="multiply" compatibility="9.3.001" expanded="true" height="124" name="Multiply" width="90" x="179" y="289"/>
       <operator activated="true" class="filter_examples" compatibility="9.3.001" expanded="true" height="103" name="Filter Examples" width="90" x="313" y="442">
