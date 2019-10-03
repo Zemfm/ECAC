@@ -14,7 +14,6 @@
     <process expanded="true">
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
-      <portSpacing port="sink_result 2" spacing="0"/>
     </process>
   </operator>
 </process>
