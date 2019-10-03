@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="9.3.001">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="9.3.001" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="productivity:execute_process" compatibility="9.3.001" expanded="true" height="68" name="Execute clean_client" width="90" x="112" y="34">
+        <parameter key="process_location" value="//Local Repository/processes/project/client_clean"/>
+        <parameter key="use_input" value="true"/>
+        <parameter key="store_output" value="false"/>
+        <parameter key="propagate_metadata_recursively" value="true"/>
+        <parameter key="cache_process" value="true"/>
+        <list key="macros"/>
+        <parameter key="fail_for_unknown_macros" value="true"/>
+      </operator>
+      <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve account" width="90" x="179" y="187">
+        <parameter key="repository_entry" value="//Local Repository/data/account"/>
+      </operator>
+      <operator activated="true" class="generate_attributes" compatibility="9.3.001" expanded="true" height="82" name="Generate Attributes" width="90" x="313" y="187">
+        <list key="function_descriptions">
+          <parameter key="date" value="date_parse_custom(str(date),&quot;yyMMdd&quot;,&quot;de&quot;)"/>
+        </list>
+        <parameter key="keep_all" value="true"/>
+      </operator>
+      <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve card_test" width="90" x="179" y="544">
+        <parameter key="repository_entry" value="../../data/card_test"/>
+      </operator>
+      <operator activated="true" class="generate_attributes" compatibility="9.3.001" expanded="true" height="82" name="Generate Attributes (2)" width="90" x="313" y="544">
+        <list key="function_descriptions">
+          <parameter key="issued" value="date_parse_custom(str(issued),&quot;yyMMdd&quot;,&quot;de&quot;)"/>
+        </list>
+        <parameter key="keep_all" value="true"/>
+      </operator>
+      <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve card_train" width="90" x="179" y="646">
+        <parameter key="repository_entry" value="../../data/card_train"/>
+      </operator>
+      <operator activated="true" class="generate_attributes" compatibility="9.3.001" expanded="true" height="82" name="Generate Attributes (3)" width="90" x="313" y="646">
+        <list key="function_descriptions">
+          <parameter key="issued" value="date_parse_custom(str(issued),&quot;yyMMdd&quot;,&quot;de&quot;)"/>
+        </list>
+        <parameter key="keep_all" value="true"/>
+      </operator>
+      <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve disp" width="90" x="179" y="799">
+        <parameter key="repository_entry" value="../../data/disp"/>
+      </operator>
+      <operator activated="true" class="rename" compatibility="9.3.001" expanded="true" height="82" name="Rename" width="90" x="313" y="799">
+        <parameter key="old_name" value="type"/>
+        <parameter key="new_name" value="disp_type"/>
+        <list key="rename_additional_attributes"/>
+      </operator>
+      <operator activated="true" class="store" compatibility="9.3.001" expanded="true" height="68" name="Store (4)" width="90" x="447" y="799">
+        <parameter key="repository_entry" value="../../data/processed/disp"/>
+      </operator>
+      <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve loan_test" width="90" x="179" y="289">
+        <parameter key="repository_entry" value="../../data/loan_test"/>
+      </operator>
+      <operator activated="true" class="generate_attributes" compatibility="9.3.001" expanded="true" height="82" name="Generate Attributes (5)" width="90" x="313" y="289">
+        <list key="function_descriptions">
+          <parameter key="date" value="date_parse_custom(str(date),&quot;yyMMdd&quot;,&quot;de&quot;)"/>
+        </list>
+        <parameter key="keep_all" value="true"/>
+      </operator>
+      <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve loan_train" width="90" x="179" y="391">
+        <parameter key="repository_entry" value="../../data/loan_train"/>
+      </operator>
+      <operator activated="true" class="generate_attributes" compatibility="9.3.001" expanded="true" height="82" name="Generate Attributes (6)" width="90" x="313" y="391">
+        <list key="function_descriptions">
+          <parameter key="date" value="date_parse_custom(str(date),&quot;yyMMdd&quot;,&quot;de&quot;)"/>
+        </list>
+        <parameter key="keep_all" value="true"/>
+      </operator>
+      <operator activated="true" class="productivity:execute_process" compatibility="9.3.001" expanded="true" height="68" name="Execute district_clean" width="90" x="246" y="34">
+        <parameter key="process_location" value="district_clean"/>
+        <parameter key="use_input" value="true"/>
+        <parameter key="store_output" value="false"/>
+        <parameter key="propagate_metadata_recursively" value="true"/>
+        <parameter key="cache_process" value="true"/>
+        <list key="macros"/>
+        <parameter key="fail_for_unknown_macros" value="true"/>
+      </operator>
+      <operator activated="true" class="rename" compatibility="9.3.001" expanded="true" height="82" name="Rename (2)" width="90" x="447" y="544">
+        <parameter key="old_name" value="type"/>
+        <parameter key="new_name" value="card_type"/>
+        <list key="rename_additional_attributes">
+          <parameter key="issued" value="date_card"/>
+        </list>
+      </operator>
+      <operator activated="true" class="store" compatibility="9.3.001" expanded="true" height="68" name="Store (2)" width="90" x="581" y="544">
+        <parameter key="repository_entry" value="../../data/processed/card_test"/>
+      </operator>
+      <operator activated="true" class="rename" compatibility="9.3.001" expanded="true" height="82" name="Rename (3)" width="90" x="447" y="646">
+        <parameter key="old_name" value="type"/>
+        <parameter key="new_name" value="card_type"/>
+        <list key="rename_additional_attributes">
+          <parameter key="issued" value="date_card"/>
+        </list>
+      </operator>
+      <operator activated="true" class="store" compatibility="9.3.001" expanded="true" height="68" name="Store (3)" width="90" x="581" y="646">
+        <parameter key="repository_entry" value="../../data/processed/card_train"/>
+      </operator>
+      <operator activated="true" class="productivity:execute_process" compatibility="9.3.001" expanded="true" height="68" name="Execute transaction_clean" width="90" x="380" y="34">
+        <parameter key="process_location" value="transaction_clean"/>
+        <parameter key="use_input" value="true"/>
+        <parameter key="store_output" value="false"/>
+        <parameter key="propagate_metadata_recursively" value="true"/>
+        <parameter key="cache_process" value="true"/>
+        <list key="macros"/>
+        <parameter key="fail_for_unknown_macros" value="true"/>
+      </operator>
+      <operator activated="true" class="rename" compatibility="9.3.001" expanded="true" height="82" name="Rename (4)" width="90" x="447" y="187">
+        <parameter key="old_name" value="date"/>
+        <parameter key="new_name" value="date_account"/>
+        <list key="rename_additional_attributes"/>
+      </operator>
+      <operator activated="true" class="store" compatibility="9.3.001" expanded="true" height="68" name="Store" width="90" x="581" y="187">
+        <parameter key="repository_entry" value="../../data/processed/account"/>
+      </operator>
+      <operator activated="true" class="rename" compatibility="9.3.001" expanded="true" height="82" name="Rename (5)" width="90" x="447" y="289">
+        <parameter key="old_name" value="date"/>
+        <parameter key="new_name" value="date_loan"/>
+        <list key="rename_additional_attributes"/>
+      </operator>
+      <operator activated="true" class="store" compatibility="9.3.001" expanded="true" height="68" name="Store (6)" width="90" x="581" y="289">
+        <parameter key="repository_entry" value="../../data/processed/loan_test"/>
+      </operator>
+      <operator activated="true" class="rename" compatibility="9.3.001" expanded="true" height="82" name="Rename (6)" width="90" x="447" y="391">
+        <parameter key="old_name" value="date"/>
+        <parameter key="new_name" value="date_loan"/>
+        <list key="rename_additional_attributes"/>
+      </operator>
+      <operator activated="true" class="store" compatibility="9.3.001" expanded="true" height="68" name="Store (7)" width="90" x="581" y="391">
+        <parameter key="repository_entry" value="../../data/processed/loan_train"/>
+      </operator>
+      <connect from_op="Retrieve account" from_port="output" to_op="Generate Attributes" to_port="example set input"/>
+      <connect from_op="Generate Attributes" from_port="example set output" to_op="Rename (4)" to_port="example set input"/>
+      <connect from_op="Retrieve card_test" from_port="output" to_op="Generate Attributes (2)" to_port="example set input"/>
+      <connect from_op="Generate Attributes (2)" from_port="example set output" to_op="Rename (2)" to_port="example set input"/>
+      <connect from_op="Retrieve card_train" from_port="output" to_op="Generate Attributes (3)" to_port="example set input"/>
+      <connect from_op="Generate Attributes (3)" from_port="example set output" to_op="Rename (3)" to_port="example set input"/>
+      <connect from_op="Retrieve disp" from_port="output" to_op="Rename" to_port="example set input"/>
+      <connect from_op="Rename" from_port="example set output" to_op="Store (4)" to_port="input"/>
+      <connect from_op="Retrieve loan_test" from_port="output" to_op="Generate Attributes (5)" to_port="example set input"/>
+      <connect from_op="Generate Attributes (5)" from_port="example set output" to_op="Rename (5)" to_port="example set input"/>
+      <connect from_op="Retrieve loan_train" from_port="output" to_op="Generate Attributes (6)" to_port="example set input"/>
+      <connect from_op="Generate Attributes (6)" from_port="example set output" to_op="Rename (6)" to_port="example set input"/>
+      <connect from_op="Rename (2)" from_port="example set output" to_op="Store (2)" to_port="input"/>
+      <connect from_op="Rename (3)" from_port="example set output" to_op="Store (3)" to_port="input"/>
+      <connect from_op="Rename (4)" from_port="example set output" to_op="Store" to_port="input"/>
+      <connect from_op="Rename (5)" from_port="example set output" to_op="Store (6)" to_port="input"/>
+      <connect from_op="Rename (6)" from_port="example set output" to_op="Store (7)" to_port="input"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <description align="center" color="orange" colored="true" height="50" resized="true" width="116" x="26" y="190">parse dates</description>
+      <description align="center" color="orange" colored="true" height="51" resized="false" width="116" x="24" y="813">rename attributes</description>
+    </process>
+  </operator>
+</process>
