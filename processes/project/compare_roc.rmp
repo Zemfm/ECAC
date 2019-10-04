@@ -49,35 +49,57 @@
             <parameter key="minimal_size_for_split" value="4"/>
             <parameter key="number_of_prepruning_alternatives" value="3"/>
           </operator>
-          <operator activated="true" class="concurrency:parallel_random_forest" compatibility="9.3.001" expanded="true" height="103" name="Random Forest" width="90" x="246" y="187">
-            <parameter key="number_of_trees" value="100"/>
+          <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="9.3.001" expanded="true" height="103" name="Decision Tree (2)" width="90" x="246" y="187">
             <parameter key="criterion" value="gain_ratio"/>
-            <parameter key="maximal_depth" value="10"/>
-            <parameter key="apply_pruning" value="false"/>
+            <parameter key="maximal_depth" value="5"/>
+            <parameter key="apply_pruning" value="true"/>
             <parameter key="confidence" value="0.1"/>
-            <parameter key="apply_prepruning" value="false"/>
+            <parameter key="apply_prepruning" value="true"/>
             <parameter key="minimal_gain" value="0.01"/>
             <parameter key="minimal_leaf_size" value="2"/>
             <parameter key="minimal_size_for_split" value="4"/>
             <parameter key="number_of_prepruning_alternatives" value="3"/>
-            <parameter key="random_splits" value="false"/>
-            <parameter key="guess_subset_ratio" value="true"/>
-            <parameter key="subset_ratio" value="0.2"/>
-            <parameter key="voting_strategy" value="confidence vote"/>
-            <parameter key="use_local_random_seed" value="false"/>
-            <parameter key="local_random_seed" value="1992"/>
-            <parameter key="enable_parallel_execution" value="true"/>
+          </operator>
+          <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="9.3.001" expanded="true" height="103" name="Decision Tree (3)" width="90" x="246" y="340">
+            <parameter key="criterion" value="gain_ratio"/>
+            <parameter key="maximal_depth" value="10"/>
+            <parameter key="apply_pruning" value="true"/>
+            <parameter key="confidence" value="0.2"/>
+            <parameter key="apply_prepruning" value="true"/>
+            <parameter key="minimal_gain" value="0.1"/>
+            <parameter key="minimal_leaf_size" value="2"/>
+            <parameter key="minimal_size_for_split" value="4"/>
+            <parameter key="number_of_prepruning_alternatives" value="3"/>
+          </operator>
+          <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="9.3.001" expanded="true" height="103" name="Decision Tree (4)" width="90" x="246" y="442">
+            <parameter key="criterion" value="gain_ratio"/>
+            <parameter key="maximal_depth" value="10"/>
+            <parameter key="apply_pruning" value="true"/>
+            <parameter key="confidence" value="0.3"/>
+            <parameter key="apply_prepruning" value="true"/>
+            <parameter key="minimal_gain" value="0.2"/>
+            <parameter key="minimal_leaf_size" value="2"/>
+            <parameter key="minimal_size_for_split" value="4"/>
+            <parameter key="number_of_prepruning_alternatives" value="3"/>
           </operator>
           <connect from_port="train 1" to_op="Decision Tree" to_port="training set"/>
-          <connect from_port="train 2" to_op="Random Forest" to_port="training set"/>
+          <connect from_port="train 2" to_op="Decision Tree (2)" to_port="training set"/>
+          <connect from_port="train 3" to_op="Decision Tree (3)" to_port="training set"/>
+          <connect from_port="train 4" to_op="Decision Tree (4)" to_port="training set"/>
           <connect from_op="Decision Tree" from_port="model" to_port="model 1"/>
-          <connect from_op="Random Forest" from_port="model" to_port="model 2"/>
+          <connect from_op="Decision Tree (2)" from_port="model" to_port="model 2"/>
+          <connect from_op="Decision Tree (3)" from_port="model" to_port="model 3"/>
+          <connect from_op="Decision Tree (4)" from_port="model" to_port="model 4"/>
           <portSpacing port="source_train 1" spacing="0"/>
           <portSpacing port="source_train 2" spacing="0"/>
           <portSpacing port="source_train 3" spacing="0"/>
+          <portSpacing port="source_train 4" spacing="0"/>
+          <portSpacing port="source_train 5" spacing="0"/>
           <portSpacing port="sink_model 1" spacing="0"/>
           <portSpacing port="sink_model 2" spacing="0"/>
           <portSpacing port="sink_model 3" spacing="0"/>
+          <portSpacing port="sink_model 4" spacing="0"/>
+          <portSpacing port="sink_model 5" spacing="0"/>
         </process>
       </operator>
       <connect from_op="Retrieve final_train_data_nominal" from_port="output" to_op="Select Attributes" to_port="example set input"/>
