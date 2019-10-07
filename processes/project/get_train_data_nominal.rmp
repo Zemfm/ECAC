@@ -24,7 +24,7 @@
       <operator activated="true" class="select_attributes" compatibility="9.3.001" expanded="true" height="82" name="Select Attributes (2)" width="90" x="179" y="136">
         <parameter key="attribute_filter_type" value="subset"/>
         <parameter key="attribute" value=""/>
-        <parameter key="attributes" value="|amount|Avg_balance|Avg_expenses (Withdrawals)|Avg_income (Credit)|Avg_trans_amount|duration|Max_Balance|Min_Balance|payments|status|total_expenses (Withdrawals)|total_income (Credit)|Std_Deviation_Balance"/>
+        <parameter key="attributes" value="|age|Avg_balance|Avg_expenses (Withdrawals)|Avg_income (Credit)|Avg_trans_amount|duration|has_disponent|latest_balance|loan amount|Max_Balance|Min_Balance|payments|status|Std_Deviation_Balance|total_expenses (Withdrawals)|total_income (Credit)"/>
         <parameter key="use_except_expression" value="false"/>
         <parameter key="value_type" value="attribute_value"/>
         <parameter key="use_value_type_exception" value="false"/>

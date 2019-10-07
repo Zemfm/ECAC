@@ -13,7 +13,7 @@
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
       <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve client" width="90" x="45" y="34">
-        <parameter key="repository_entry" value="//Local Repository/data/client"/>
+        <parameter key="repository_entry" value="../../data/client"/>
       </operator>
       <operator activated="true" class="generate_attributes" compatibility="9.3.001" expanded="true" height="82" name="Generate Attributes" width="90" x="179" y="34">
         <list key="function_descriptions">
