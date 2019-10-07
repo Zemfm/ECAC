@@ -13,7 +13,7 @@
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
       <operator activated="true" class="productivity:execute_process" compatibility="9.3.001" expanded="true" height="68" name="Execute clean_client" width="90" x="112" y="34">
-        <parameter key="process_location" value="client_clean"/>
+        <parameter key="process_location" value="//Local Repository/processes/project/client_clean"/>
         <parameter key="use_input" value="true"/>
         <parameter key="store_output" value="false"/>
         <parameter key="propagate_metadata_recursively" value="true"/>
@@ -22,7 +22,7 @@
         <parameter key="fail_for_unknown_macros" value="true"/>
       </operator>
       <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve account" width="90" x="179" y="187">
-        <parameter key="repository_entry" value="../../data/account"/>
+        <parameter key="repository_entry" value="//Local Repository/data/account"/>
       </operator>
       <operator activated="true" class="generate_attributes" compatibility="9.3.001" expanded="true" height="82" name="Generate Attributes" width="90" x="313" y="187">
         <list key="function_descriptions">
@@ -126,7 +126,9 @@
       <operator activated="true" class="rename" compatibility="9.3.001" expanded="true" height="82" name="Rename (5)" width="90" x="447" y="289">
         <parameter key="old_name" value="date"/>
         <parameter key="new_name" value="date_loan"/>
-        <list key="rename_additional_attributes"/>
+        <list key="rename_additional_attributes">
+          <parameter key="amount" value="loan amount"/>
+        </list>
       </operator>
       <operator activated="true" class="store" compatibility="9.3.001" expanded="true" height="68" name="Store (6)" width="90" x="581" y="289">
         <parameter key="repository_entry" value="../../data/processed/loan_test"/>
@@ -134,7 +136,9 @@
       <operator activated="true" class="rename" compatibility="9.3.001" expanded="true" height="82" name="Rename (6)" width="90" x="447" y="391">
         <parameter key="old_name" value="date"/>
         <parameter key="new_name" value="date_loan"/>
-        <list key="rename_additional_attributes"/>
+        <list key="rename_additional_attributes">
+          <parameter key="amount" value="loan amount"/>
+        </list>
       </operator>
       <operator activated="true" class="store" compatibility="9.3.001" expanded="true" height="68" name="Store (7)" width="90" x="581" y="391">
         <parameter key="repository_entry" value="../../data/processed/loan_train"/>
