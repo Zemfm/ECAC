@@ -213,6 +213,7 @@
         <list key="aggregation_attributes">
           <parameter key="balance" value="minimum"/>
           <parameter key="balance" value="maximum"/>
+          <parameter key="balance" value="standard_deviation"/>
         </list>
         <parameter key="group_by_attributes" value="|account_id"/>
         <parameter key="count_all_combinations" value="false"/>
@@ -310,6 +311,7 @@
         <parameter key="new_name" value="Min_Balance"/>
         <list key="rename_additional_attributes">
           <parameter key="maximum(balance)" value="Max_Balance"/>
+          <parameter key="standard_deviation(balance)" value="Std_Deviation_Balance"/>
         </list>
       </operator>
       <operator activated="true" class="concurrency:join" compatibility="9.3.001" expanded="true" height="82" name="Join (3)" width="90" x="983" y="697">

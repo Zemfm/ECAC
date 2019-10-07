@@ -39,25 +39,45 @@
         </list>
         <parameter key="keep_both_join_attributes" value="false"/>
       </operator>
-      <operator activated="true" class="filter_examples" compatibility="9.3.001" expanded="true" height="103" name="Remove Non Owners" width="90" x="447" y="187">
-        <parameter key="parameter_expression" value=""/>
-        <parameter key="condition_class" value="custom_filters"/>
-        <parameter key="invert_filter" value="false"/>
-        <list key="filters_list">
-          <parameter key="filters_entry_key" value="disp_type.equals.OWNER"/>
-        </list>
-        <parameter key="filters_logic_and" value="true"/>
-        <parameter key="filters_check_metadata" value="true"/>
-      </operator>
       <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve loan_train" width="90" x="45" y="442">
         <parameter key="repository_entry" value="../../data/processed/loan_train"/>
       </operator>
       <operator activated="true" class="retrieve" compatibility="9.3.001" expanded="true" height="68" name="Retrieve trans_train" width="90" x="45" y="544">
         <parameter key="repository_entry" value="../../data/processed/trans_train"/>
       </operator>
-      <operator activated="true" class="select_attributes" compatibility="9.3.001" expanded="true" height="82" name="Remove Type Column" width="90" x="581" y="187">
-        <parameter key="attribute_filter_type" value="single"/>
-        <parameter key="attribute" value="disp_type"/>
+      <operator activated="true" class="multiply" compatibility="9.3.001" expanded="true" height="187" name="Multiply" width="90" x="179" y="544"/>
+      <operator activated="true" class="select_attributes" compatibility="9.3.001" expanded="true" height="82" name="latest balance" width="90" x="313" y="1207">
+        <parameter key="attribute_filter_type" value="subset"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="attributes" value="account_id|balance|date_trans"/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+      </operator>
+      <operator activated="true" class="select_attributes" compatibility="9.3.001" expanded="true" height="82" name="latest balance date" width="90" x="313" y="1105">
+        <parameter key="attribute_filter_type" value="subset"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="attributes" value="balance|date_trans|account_id"/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+      </operator>
+      <operator activated="true" class="aggregate" compatibility="9.3.001" expanded="true" height="82" name="Get latest trans date" width="90" x="447" y="1105">
+        <parameter key="use_default_aggregation" value="false"/>
+        <parameter key="attribute_filter_type" value="all"/>
+        <parameter key="attribute" value=""/>
         <parameter key="attributes" value=""/>
         <parameter key="use_except_expression" value="false"/>
         <parameter key="value_type" value="attribute_value"/>
@@ -66,11 +86,17 @@
         <parameter key="block_type" value="attribute_block"/>
         <parameter key="use_block_type_exception" value="false"/>
         <parameter key="except_block_type" value="value_matrix_row_start"/>
-        <parameter key="invert_selection" value="true"/>
+        <parameter key="invert_selection" value="false"/>
         <parameter key="include_special_attributes" value="false"/>
+        <parameter key="default_aggregation_function" value="average"/>
+        <list key="aggregation_attributes">
+          <parameter key="date_trans" value="maximum"/>
+        </list>
+        <parameter key="group_by_attributes" value="account_id"/>
+        <parameter key="count_all_combinations" value="false"/>
+        <parameter key="only_distinct" value="false"/>
+        <parameter key="ignore_missings" value="true"/>
       </operator>
-      <operator activated="true" class="multiply" compatibility="9.3.001" expanded="true" height="82" name="Multiply (2)" width="90" x="179" y="391"/>
-      <operator activated="true" class="multiply" compatibility="9.3.001" expanded="true" height="145" name="Multiply" width="90" x="179" y="544"/>
       <operator activated="true" class="select_attributes" compatibility="9.3.001" expanded="true" height="82" name="id,amount,type (2)" width="90" x="313" y="850">
         <parameter key="attribute_filter_type" value="subset"/>
         <parameter key="attribute" value=""/>
@@ -140,7 +166,7 @@
         <parameter key="invert_selection" value="false"/>
         <parameter key="include_special_attributes" value="false"/>
       </operator>
-      <operator activated="true" class="filter_examples" compatibility="9.3.001" expanded="true" height="103" name="Filter Credit" width="90" x="447" y="748">
+      <operator activated="true" class="filter_examples" compatibility="9.3.001" expanded="true" height="103" name="Filter Withdrawal" width="90" x="447" y="748">
         <parameter key="parameter_expression" value=""/>
         <parameter key="condition_class" value="custom_filters"/>
         <parameter key="invert_filter" value="false"/>
@@ -213,6 +239,7 @@
         <list key="aggregation_attributes">
           <parameter key="balance" value="minimum"/>
           <parameter key="balance" value="maximum"/>
+          <parameter key="balance" value="standard_deviation"/>
         </list>
         <parameter key="group_by_attributes" value="|account_id"/>
         <parameter key="count_all_combinations" value="false"/>
@@ -256,6 +283,66 @@
         <parameter key="count_all_combinations" value="false"/>
         <parameter key="only_distinct" value="false"/>
         <parameter key="ignore_missings" value="true"/>
+      </operator>
+      <operator activated="true" class="concurrency:join" compatibility="9.3.001" expanded="true" height="82" name="join" width="90" x="581" y="1207">
+        <parameter key="remove_double_attributes" value="true"/>
+        <parameter key="join_type" value="inner"/>
+        <parameter key="use_id_attribute_as_key" value="false"/>
+        <list key="key_attributes">
+          <parameter key="maximum(date_trans)" value="date_trans"/>
+          <parameter key="account_id" value="account_id"/>
+        </list>
+        <parameter key="keep_both_join_attributes" value="false"/>
+      </operator>
+      <operator activated="true" class="rename" compatibility="9.3.001" expanded="true" height="82" name="rename to latest balance" width="90" x="715" y="1207">
+        <parameter key="old_name" value="balance"/>
+        <parameter key="new_name" value="latest_balance"/>
+        <list key="rename_additional_attributes"/>
+      </operator>
+      <operator activated="true" class="select_attributes" compatibility="9.3.001" expanded="true" height="82" name="Remove latest date" width="90" x="849" y="1207">
+        <parameter key="attribute_filter_type" value="single"/>
+        <parameter key="attribute" value="maximum(date_trans)"/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="true"/>
+        <parameter key="include_special_attributes" value="false"/>
+      </operator>
+      <operator activated="true" class="generate_attributes" compatibility="9.3.001" expanded="true" height="82" name="Generate Attributes" width="90" x="648" y="187">
+        <list key="function_descriptions">
+          <parameter key="has_disp" value="if(compare(disp_type,&quot;DISPONENT&quot;),false,true)"/>
+        </list>
+        <parameter key="keep_all" value="true"/>
+      </operator>
+      <operator activated="true" class="multiply" compatibility="9.3.001" expanded="true" height="103" name="Multiply (4)" width="90" x="782" y="187"/>
+      <operator activated="true" class="filter_examples" compatibility="9.3.001" expanded="true" height="103" name="Remove Disp" width="90" x="916" y="187">
+        <parameter key="parameter_expression" value=""/>
+        <parameter key="condition_class" value="custom_filters"/>
+        <parameter key="invert_filter" value="false"/>
+        <list key="filters_list">
+          <parameter key="filters_entry_key" value="disp_type.equals.OWNER"/>
+        </list>
+        <parameter key="filters_logic_and" value="true"/>
+        <parameter key="filters_check_metadata" value="true"/>
+      </operator>
+      <operator activated="true" class="select_attributes" compatibility="9.3.001" expanded="true" height="82" name="Remove Type Column" width="90" x="1050" y="187">
+        <parameter key="attribute_filter_type" value="single"/>
+        <parameter key="attribute" value="disp_type"/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="true"/>
+        <parameter key="include_special_attributes" value="false"/>
       </operator>
       <operator activated="true" class="concurrency:join" compatibility="9.3.001" expanded="true" height="82" name="Merge Loan" width="90" x="313" y="391">
         <parameter key="remove_double_attributes" value="true"/>
@@ -310,6 +397,7 @@
         <parameter key="new_name" value="Min_Balance"/>
         <list key="rename_additional_attributes">
           <parameter key="maximum(balance)" value="Max_Balance"/>
+          <parameter key="standard_deviation(balance)" value="Std_Deviation_Balance"/>
         </list>
       </operator>
       <operator activated="true" class="concurrency:join" compatibility="9.3.001" expanded="true" height="82" name="Join (3)" width="90" x="983" y="697">
@@ -330,6 +418,15 @@
         </list>
         <parameter key="keep_both_join_attributes" value="false"/>
       </operator>
+      <operator activated="true" class="concurrency:join" compatibility="9.3.001" expanded="true" height="82" name="Join (5)" width="90" x="1117" y="901">
+        <parameter key="remove_double_attributes" value="true"/>
+        <parameter key="join_type" value="left"/>
+        <parameter key="use_id_attribute_as_key" value="false"/>
+        <list key="key_attributes">
+          <parameter key="account_id" value="account_id"/>
+        </list>
+        <parameter key="keep_both_join_attributes" value="false"/>
+      </operator>
       <operator activated="true" class="filter_examples" compatibility="9.3.001" expanded="true" height="103" name="Remove missing values" width="90" x="1251" y="799">
         <parameter key="parameter_expression" value=""/>
         <parameter key="condition_class" value="no_missing_attributes"/>
@@ -339,35 +436,45 @@
         <parameter key="filters_check_metadata" value="true"/>
       </operator>
       <operator activated="true" class="multiply" compatibility="9.3.001" expanded="true" height="103" name="Multiply (3)" width="90" x="1385" y="799"/>
-      <operator activated="true" class="store" compatibility="9.3.001" expanded="true" height="68" name="Store (2)" width="90" x="1519" y="697">
+      <operator activated="true" class="store" compatibility="9.3.001" expanded="true" height="68" name="Store (2)" width="90" x="1452" y="646">
         <parameter key="repository_entry" value="../../data/processed/final_train_data"/>
       </operator>
       <connect from_op="Retrieve account" from_port="output" to_op="Merge Account" to_port="right"/>
       <connect from_op="Retrieve client" from_port="output" to_op="Merge Disp" to_port="left"/>
       <connect from_op="Retrieve disp" from_port="output" to_op="Merge Disp" to_port="right"/>
       <connect from_op="Merge Disp" from_port="join" to_op="Merge Account" to_port="left"/>
-      <connect from_op="Merge Account" from_port="join" to_op="Remove Non Owners" to_port="example set input"/>
-      <connect from_op="Remove Non Owners" from_port="example set output" to_op="Remove Type Column" to_port="example set input"/>
-      <connect from_op="Retrieve loan_train" from_port="output" to_op="Multiply (2)" to_port="input"/>
+      <connect from_op="Merge Account" from_port="join" to_op="Generate Attributes" to_port="example set input"/>
+      <connect from_op="Retrieve loan_train" from_port="output" to_op="Merge Loan" to_port="right"/>
       <connect from_op="Retrieve trans_train" from_port="output" to_op="Multiply" to_port="input"/>
-      <connect from_op="Remove Type Column" from_port="example set output" to_op="Merge Loan" to_port="left"/>
-      <connect from_op="Multiply (2)" from_port="output 1" to_op="Merge Loan" to_port="right"/>
       <connect from_op="Multiply" from_port="output 1" to_op="Id,amount,balance" to_port="example set input"/>
       <connect from_op="Multiply" from_port="output 2" to_op="id, balance" to_port="example set input"/>
       <connect from_op="Multiply" from_port="output 3" to_op="id,amount,type" to_port="example set input"/>
       <connect from_op="Multiply" from_port="output 4" to_op="id,amount,type (2)" to_port="example set input"/>
+      <connect from_op="Multiply" from_port="output 5" to_op="latest balance date" to_port="example set input"/>
+      <connect from_op="Multiply" from_port="output 6" to_op="latest balance" to_port="example set input"/>
+      <connect from_op="latest balance" from_port="example set output" to_op="join" to_port="right"/>
+      <connect from_op="latest balance date" from_port="example set output" to_op="Get latest trans date" to_port="example set input"/>
+      <connect from_op="Get latest trans date" from_port="example set output" to_op="join" to_port="left"/>
       <connect from_op="id,amount,type (2)" from_port="example set output" to_op="Filter Credit (2)" to_port="example set input"/>
       <connect from_op="Filter Credit (2)" from_port="example set output" to_op="Avg_inc,Avg_inc_sum" to_port="example set input"/>
       <connect from_op="Avg_inc,Avg_inc_sum" from_port="example set output" to_op="Rename (4)" to_port="example set input"/>
       <connect from_op="Rename (4)" from_port="example set output" to_op="Join (4)" to_port="right"/>
-      <connect from_op="id,amount,type" from_port="example set output" to_op="Filter Credit" to_port="example set input"/>
-      <connect from_op="Filter Credit" from_port="example set output" to_op="Avg_exp, Avg_exp_sum" to_port="example set input"/>
+      <connect from_op="id,amount,type" from_port="example set output" to_op="Filter Withdrawal" to_port="example set input"/>
+      <connect from_op="Filter Withdrawal" from_port="example set output" to_op="Avg_exp, Avg_exp_sum" to_port="example set input"/>
       <connect from_op="Avg_exp, Avg_exp_sum" from_port="example set output" to_op="Rename (3)" to_port="example set input"/>
       <connect from_op="Rename (3)" from_port="example set output" to_op="Join (3)" to_port="right"/>
       <connect from_op="id, balance" from_port="example set output" to_op="Aggregate (2)" to_port="example set input"/>
       <connect from_op="Aggregate (2)" from_port="example set output" to_op="Join (2)" to_port="right"/>
       <connect from_op="Id,amount,balance" from_port="example set output" to_op="Aggregate" to_port="example set input"/>
       <connect from_op="Aggregate" from_port="example set output" to_op="Join" to_port="right"/>
+      <connect from_op="join" from_port="join" to_op="rename to latest balance" to_port="example set input"/>
+      <connect from_op="rename to latest balance" from_port="example set output" to_op="Remove latest date" to_port="example set input"/>
+      <connect from_op="Remove latest date" from_port="example set output" to_op="Join (5)" to_port="right"/>
+      <connect from_op="Generate Attributes" from_port="example set output" to_op="Multiply (4)" to_port="input"/>
+      <connect from_op="Multiply (4)" from_port="output 1" to_op="Remove Disp" to_port="example set input"/>
+      <connect from_op="Multiply (4)" from_port="output 2" to_port="result 3"/>
+      <connect from_op="Remove Disp" from_port="example set output" to_op="Remove Type Column" to_port="example set input"/>
+      <connect from_op="Remove Type Column" from_port="example set output" to_op="Merge Loan" to_port="left"/>
       <connect from_op="Merge Loan" from_port="join" to_op="Remove id columns" to_port="example set input"/>
       <connect from_op="Remove id columns" from_port="example set output" to_op="Join" to_port="left"/>
       <connect from_op="Join" from_port="join" to_op="Rename" to_port="example set input"/>
@@ -375,15 +482,18 @@
       <connect from_op="Join (2)" from_port="join" to_op="Rename (2)" to_port="example set input"/>
       <connect from_op="Rename (2)" from_port="example set output" to_op="Join (3)" to_port="left"/>
       <connect from_op="Join (3)" from_port="join" to_op="Join (4)" to_port="left"/>
-      <connect from_op="Join (4)" from_port="join" to_op="Remove missing values" to_port="example set input"/>
+      <connect from_op="Join (4)" from_port="join" to_op="Join (5)" to_port="left"/>
+      <connect from_op="Join (5)" from_port="join" to_op="Remove missing values" to_port="example set input"/>
       <connect from_op="Remove missing values" from_port="example set output" to_op="Multiply (3)" to_port="input"/>
       <connect from_op="Multiply (3)" from_port="output 1" to_op="Store (2)" to_port="input"/>
       <connect from_op="Multiply (3)" from_port="output 2" to_port="result 1"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>
+      <portSpacing port="sink_result 3" spacing="0"/>
+      <portSpacing port="sink_result 4" spacing="0"/>
       <description align="center" color="yellow" colored="false" height="200" resized="true" width="209" x="1103" y="561">Create Avg Balance and Avg Amount&lt;br&gt;&lt;br&gt;Create Min Balance and Max Balance&lt;br&gt;&lt;br&gt;Create Avg and total Expenses (Withdrawls)&lt;br&gt;&lt;br&gt;Create Avg and total Income (Credit)&lt;br&gt;</description>
-      <description align="center" color="yellow" colored="false" height="57" resized="true" width="179" x="1073" y="845">Remove amount, duration and payment?</description>
+      <description align="center" color="yellow" colored="false" height="183" resized="false" width="180" x="584" y="1006">last balance (before loan)&lt;br&gt;has disponent (boolean)&lt;br&gt;&lt;br&gt;&lt;br&gt;age of owner when loan was requested&lt;br&gt;age of disponent when loan was requested (if no disponent then = 0)&lt;br&gt;</description>
     </process>
   </operator>
 </process>
