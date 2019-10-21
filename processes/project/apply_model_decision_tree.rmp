@@ -30,17 +30,6 @@
         </list>
         <parameter key="keep_both_join_attributes" value="false"/>
       </operator>
-      <operator activated="true" class="weight_by_user_specification" compatibility="9.3.001" expanded="true" height="82" name="Weight by User Specification" width="90" x="179" y="442">
-        <parameter key="normalize_weights" value="false"/>
-        <parameter key="sort_weights" value="true"/>
-        <parameter key="sort_direction" value="ascending"/>
-        <list key="name_regex_to_weights">
-          <parameter key="Min_Balance" value="2.0"/>
-        </list>
-        <parameter key="distribute_weights" value="false"/>
-        <parameter key="default_weight" value="1.0"/>
-      </operator>
-      <operator activated="true" class="scale_by_weights" compatibility="9.3.001" expanded="true" height="82" name="Scale by Weights" width="90" x="313" y="493"/>
       <operator activated="true" class="concurrency:cross_validation" compatibility="9.3.001" expanded="true" height="166" name="Cross Validation" width="90" x="447" y="340">
         <parameter key="split_on_batch_attribute" value="false"/>
         <parameter key="leave_one_out" value="false"/>
@@ -199,17 +188,6 @@
         </process>
       </operator>
       <operator activated="true" class="multiply" compatibility="9.3.001" expanded="true" height="103" name="Model Mult" width="90" x="581" y="238"/>
-      <operator activated="true" class="weight_by_user_specification" compatibility="9.3.001" expanded="true" height="82" name="Weight by User Specification (2)" width="90" x="313" y="85">
-        <parameter key="normalize_weights" value="false"/>
-        <parameter key="sort_weights" value="true"/>
-        <parameter key="sort_direction" value="ascending"/>
-        <list key="name_regex_to_weights">
-          <parameter key="Min_Balance" value="2.0"/>
-        </list>
-        <parameter key="distribute_weights" value="false"/>
-        <parameter key="default_weight" value="1.0"/>
-      </operator>
-      <operator activated="true" class="scale_by_weights" compatibility="9.3.001" expanded="true" height="82" name="Scale by Weights (2)" width="90" x="447" y="136"/>
       <operator activated="true" class="apply_model" compatibility="9.3.001" expanded="true" height="82" name="Apply Model (3)" width="90" x="648" y="85">
         <list key="application_parameters"/>
         <parameter key="create_view" value="false"/>
@@ -277,13 +255,10 @@
         <parameter key="append_to_file" value="false"/>
         <parameter key="encoding" value="SYSTEM"/>
       </operator>
-      <connect from_op="Retrieve final_train_data_nominal" from_port="output" to_op="Weight by User Specification" to_port="example set"/>
+      <connect from_op="Retrieve final_train_data_nominal" from_port="output" to_op="Cross Validation" to_port="example set"/>
       <connect from_op="Retrieve loan_test" from_port="output" to_op="Join" to_port="left"/>
       <connect from_op="Retrieve final_test_data" from_port="output" to_op="Join" to_port="right"/>
-      <connect from_op="Join" from_port="join" to_op="Weight by User Specification (2)" to_port="example set"/>
-      <connect from_op="Weight by User Specification" from_port="weights" to_op="Scale by Weights" to_port="weights"/>
-      <connect from_op="Weight by User Specification" from_port="example set" to_op="Scale by Weights" to_port="example set"/>
-      <connect from_op="Scale by Weights" from_port="example set" to_op="Cross Validation" to_port="example set"/>
+      <connect from_op="Join" from_port="join" to_op="Apply Model (3)" to_port="unlabelled data"/>
       <connect from_op="Cross Validation" from_port="model" to_op="Model Mult" to_port="input"/>
       <connect from_op="Cross Validation" from_port="example set" to_port="result 1"/>
       <connect from_op="Cross Validation" from_port="test result set" to_port="result 4"/>
@@ -291,9 +266,6 @@
       <connect from_op="Cross Validation" from_port="performance 2" to_port="result 3"/>
       <connect from_op="Model Mult" from_port="output 1" to_op="Apply Model (3)" to_port="model"/>
       <connect from_op="Model Mult" from_port="output 2" to_port="result 6"/>
-      <connect from_op="Weight by User Specification (2)" from_port="weights" to_op="Scale by Weights (2)" to_port="weights"/>
-      <connect from_op="Weight by User Specification (2)" from_port="example set" to_op="Scale by Weights (2)" to_port="example set"/>
-      <connect from_op="Scale by Weights (2)" from_port="example set" to_op="Apply Model (3)" to_port="unlabelled data"/>
       <connect from_op="Apply Model (3)" from_port="labelled data" to_op="Apply Threshold" to_port="example set"/>
       <connect from_op="Create Threshold" from_port="output" to_op="Apply Threshold" to_port="threshold"/>
       <connect from_op="Apply Threshold" from_port="example set" to_op="Select Attributes" to_port="example set input"/>
